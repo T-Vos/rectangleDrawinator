@@ -6,12 +6,6 @@ const getRandomNumber = (limit: number) => {
 	return Math.floor(Math.random() * limit);
 };
 
-type Field = {
-	id: number;
-	x: string;
-	y: string;
-};
-
 type DynamicInputFieldsProps = {
 	onRectanglesChange: (rectangles: Rectangle[]) => void;
 };
@@ -46,11 +40,14 @@ const DynamicInputFields: React.FC<DynamicInputFieldsProps> = ({
 			.map((field) => {
 				const x = parseInt(field.x, 10);
 				const y = parseInt(field.y, 10);
-				const id = getRandomNumber(x * y + 500);
+				const randomColor = `hsl(${
+					getRandomNumber(x * y + 500) % 360
+				}deg, 50%, 70%)`;
 				return {
 					x: x,
 					y: y,
 					id: id,
+					color: randomColor,
 				};
 			});
 		onRectanglesChange(rectangles);

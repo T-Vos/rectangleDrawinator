@@ -18,7 +18,12 @@ export default function Home() {
 	return (
 		<main className={styles.main}>
 			<div className={styles.header}>
-				<h1 className={styles.title}>Rectangles Drawer</h1>
+				<h1 className={styles.title}>Rectangles Drawer 3000</h1>
+				<p>
+					Having a need to create rectangles of different sizes? Or just want to
+					have some straight lines for fun? Try your best at this flexible
+					rectangular machine
+				</p>
 			</div>
 			<div className={styles.inputGrid}>
 				<div className={styles.inputSection}>

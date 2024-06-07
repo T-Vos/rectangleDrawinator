@@ -2,6 +2,7 @@
 
 import { Rectangle } from '../helpers/rectangleType';
 import { calculateDimensions } from '../utils/calculateDimension';
+import styles from '../styles/components.module.css';
 
 const DownloadButton = ({ rectangles }: { rectangles: Rectangle[] }) => {
 	const dimensions = calculateDimensions(rectangles);
@@ -36,7 +37,11 @@ const DownloadButton = ({ rectangles }: { rectangles: Rectangle[] }) => {
 		URL.revokeObjectURL(url);
 	};
 
-	return <button onClick={generateSVG}>Download SVG</button>;
+	return (
+		<button className={styles.downloadButton} onClick={generateSVG}>
+			Download SVG
+		</button>
+	);
 };
 
 export default DownloadButton;
