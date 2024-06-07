@@ -1,16 +1,17 @@
 'use client';
 
 import Head from 'next/head';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import styles from './styles/page.module.css';
 import DynamicInputFields from './components/DynamicInputFields';
 import RectanglesDisplay from './components/RectanglesDisplay';
 import DownloadButton from './components/DownloadButton';
+import { Rectangle } from './helpers/rectangleType';
 
 export default function Home() {
-	const [rectangles, setRectangles] = useState([]);
+	const [rectangles, setRectangles] = useState<Rectangle[]>([]);
 
-	const handleRectanglesChange = (newRectangles) => {
+	const handleRectanglesChange = (newRectangles: Rectangle[]) => {
 		setRectangles(newRectangles);
 	};
 

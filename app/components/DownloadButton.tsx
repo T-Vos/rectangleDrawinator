@@ -1,8 +1,9 @@
 'use client';
 
+import { Rectangle } from '../helpers/rectangleType';
 import { calculateDimensions } from '../utils/calculateDimension';
 
-const DownloadButton = ({ rectangles }) => {
+const DownloadButton = ({ rectangles }: { rectangles: Rectangle[] }) => {
 	const dimensions = calculateDimensions(rectangles);
 	const generateSVG = () => {
 		let currentY = 10; // Start with some padding from the top
