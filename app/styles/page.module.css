@@ -1,33 +1,20 @@
-.container {
-	padding: 0 2rem;
-}
-
 .main {
 	min-height: 100vh;
-	padding: 4rem 0;
-	flex: 1;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+}
+.inputGrid {
+	padding: 2rem 4rem;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
 }
 
 .title {
 	margin: 0;
-	line-height: 1.15;
-	font-size: 4rem;
-}
-
-.splitScreen {
-	display: flex;
-	width: 100%;
-	height: 100%;
 }
 
 .inputSection {
-	flex: 1;
-	padding: 20px;
-	border-right: 1px solid #ccc;
+	padding: 0.5rem;
 }
 
 .displaySection {

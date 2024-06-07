@@ -1,9 +1,14 @@
-'use client';
-
 import { useState } from 'react';
+import styles from '../styles/components.module.css';
+
+const getRandomNumber = (limit) => {
+	return Math.floor(Math.random() * limit);
+};
 
 const DynamicInputFields = ({ onRectanglesChange }) => {
-	const [fields, setFields] = useState([{ id: 1, x: '', y: '' }]);
+	const [fields, setFields] = useState([
+		{ id: getRandomNumber(1000), x: '', y: '' },
+	]);
 
 	const handleInputChange = (id, event) => {
 		const newFields = fields.map((field) => {
@@ -16,29 +21,36 @@ const DynamicInputFields = ({ onRectanglesChange }) => {
 
 		// Add a new pair of inputs if the last pair is not empty
 		if (newFields.every((field) => field.x !== '' || field.y !== '')) {
-			setFields([...newFields, { id: fields.length + 1, x: '', y: '' }]);
+			setFields([...newFields, { id: getRandomNumber(1000), x: '', y: '' }]);
 		}
 
 		// Update rectangles in the parent component
 		const rectangles = newFields
 			.filter((field) => field.x && field.y)
-			.map((field) => ({
-				x: parseInt(field.x, 10),
-				y: parseInt(field.y, 10),
-			}));
+			.map((field) => {
+				const x = parseInt(field.x, 10);
+				const y = parseInt(field.y, 10);
+				const id = getRandomNumber(x * y + 500);
+				return {
+					x: x,
+					y: y,
+					id: id,
+				};
+			});
 		onRectanglesChange(rectangles);
 	};
 
 	return (
-		<div>
+		<div className={styles.inputsList}>
 			{fields.map((field) => (
-				<div key={field.id}>
+				<div className={styles.formField} key={field.id}>
 					<input
 						type="number"
 						name="x"
 						value={field.x}
 						onChange={(event) => handleInputChange(field.id, event)}
 						placeholder="X length"
+						className={styles.numberInput}
 					/>
 					<input
 						type="number"
@@ -46,6 +58,7 @@ const DynamicInputFields = ({ onRectanglesChange }) => {
 						value={field.y}
 						onChange={(event) => handleInputChange(field.id, event)}
 						placeholder="Y length"
+						className={styles.numberInput}
 					/>
 				</div>
 			))}
