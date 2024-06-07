@@ -3,13 +3,15 @@
 import { useState } from 'react';
 import { Rectangle } from '../helpers/rectangleType';
 const RectanglesDisplay = ({ rectangles }: { rectangles: Rectangle[] }) => {
-	const [open, set] = useState(true);
+	// Flatten the rectangles array based on the count property
+	const expandedRectangles = rectangles.flatMap((rect: Rectangle) => {
+		const count = rect.count >= 1 ? rect.count : 1;
+		return Array(count).fill(rect);
+	});
+
 	return (
-		<div
-			style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}
-			onChange={() => set((state) => !state)}
-		>
-			{rectangles.map((rect: Rectangle, index: number) => {
+		<div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+			{expandedRectangles.map((rect: Rectangle, index: number) => {
 				return (
 					<div
 						key={index}
