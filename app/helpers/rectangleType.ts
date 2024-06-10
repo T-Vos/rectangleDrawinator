@@ -1,16 +1,27 @@
-type PositiveInteger = number & { __type: 'PositiveInteger' };
+export interface RectangleInput {
+	y: number;
+	x: number;
+	id: number;
+	count: number;
+}
 
-export const asPositiveInteger = (value: number): PositiveInteger => {
-	if (!Number.isInteger(value) || value <= 0) {
-		// throw new Error('Value must be a positive integer');
-	}
-	return value as PositiveInteger;
-};
-
-export interface Rectangle {
+export interface RectangleDysplay {
 	y: number;
 	x: number;
 	id: number;
 	color: string;
-	count: PositiveInteger;
+	count: number;
 }
+
+export type SurfaceField = {
+	id: number;
+	surface: number | string;
+	count: number | string;
+};
+
+export type SurfaceDisplay = {
+	id: number;
+	surface: number | string;
+	surfaceColor?: string;
+	surfaceName?: string;
+};

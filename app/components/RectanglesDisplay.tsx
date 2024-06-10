@@ -11,6 +11,8 @@ const RectanglesDisplay = ({ rectangles }: { rectangles: Rectangle[] }) => {
 
 	return (
 		<div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+			{/* {JSON.stringify(expandedRectangles)} */}
+
 			{expandedRectangles.map((rect: Rectangle, index: number) => {
 				return (
 					<div
@@ -22,9 +24,7 @@ const RectanglesDisplay = ({ rectangles }: { rectangles: Rectangle[] }) => {
 							border: '1px solid black',
 							boxSizing: 'border-box',
 						}}
-					>
-						{/* {JSON.stringify(rect)} */}
-					</div>
+					></div>
 				);
 			})}
 		</div>

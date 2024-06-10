@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, ChangeEvent } from 'react';
-import styles from './styles/page.module.css';
-import DynamicInputFields from './components/DynamicInputFields';
-import RectanglesDisplay from './components/RectanglesDisplay';
-import DownloadButton from './components/DownloadButton';
-import { Rectangle } from './helpers/rectangleType';
+import styles from '../styles/page.module.css';
+import DynamicInputFields from '../components/DynamicInputFields';
+import RectanglesDisplay from '../components/RectanglesDisplay';
+import DownloadButton from '../components/DownloadButton';
+import { RectangleInput } from '../helpers/rectangleType';
 
 const getRandomNumber = (limit: number) => {
 	return Math.floor(Math.random() * limit);
@@ -22,7 +22,7 @@ export default function Home() {
 	const [fields, setFields] = useState<Field[]>([
 		{ id: 1, x: '', y: '', count: '1' },
 	]);
-	const [rectangles, setRectangles] = useState<Rectangle[]>([]);
+	const [rectangles, setRectangles] = useState<RectangleInput[]>([]);
 
 	const handleInputChange = (
 		id: number,
