@@ -20,7 +20,8 @@ export type SurfaceField = {
 };
 
 export type SurfaceDisplay = {
-	id: number;
+	rectGroupid: number;
+	rectInGroupid: number;
 	surface: number | string;
 	surfaceColor?: string;
 	surfaceName?: string;

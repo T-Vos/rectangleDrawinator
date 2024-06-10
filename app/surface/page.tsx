@@ -42,22 +42,29 @@ export default function Home() {
 	};
 
 	useEffect(() => {
-		const expandedRectangles = surfaceInputs.flatMap((rect: SurfaceField) => {
-			const countString = rect.count.toString();
-			const count = parseInt(countString, 10) >= 1 ? parseInt(countString) : 1;
-			return Array(count).fill(rect);
-		});
+		const expandedRectangles = surfaceInputs.flatMap(
+			(rect: SurfaceField, index: number) => {
+				const countString = rect.count.toString();
+				const count =
+					parseInt(countString, 10) >= 1 ? parseInt(countString) : 1;
+				return Array(count).fill({ ...rect });
+			}
+		);
 		setSurfaceDisplay(expandedRectangles);
 	}, [surfaceInputs]);
 
 	useEffect(() => {
-		const totalRectangelSurface = surfaceDisplay
-			.filter((x) => x.surface != '')
-			.reduce((totalHeight, rect) => {
-				return totalHeight + parseInt(rect.surface.toString()) ?? 0;
-			}, 0);
-		let result = parseInt(totalSurface.toString(), 10) - totalRectangelSurface;
-		setLeftOverTotal(result ?? 0);
+		const _totalRectangelSurface =
+			surfaceDisplay
+				.filter((x) => x.surface != '')
+				.reduce((totalHeight, rect) => {
+					return totalHeight + parseInt(rect.surface.toString()) || 0;
+				}, 0) || 0;
+
+		const _totalSurface: number = parseInt(totalSurface.toString(), 10) || 0;
+
+		const result = _totalSurface - _totalRectangelSurface;
+		setLeftOverTotal(result);
 	}, [surfaceDisplay, surfaceInputs]);
 
 	return (

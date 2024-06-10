@@ -90,10 +90,10 @@ export default function Home() {
 						fields={fields}
 						onInputChange={handleInputChange}
 					/>
-					<DownloadButton rectangles={rectangles} />
+					{/* <DownloadButton rectangles={rectangles} /> */}
 				</div>
 				<div className={styles.displaySection}>
-					<RectanglesDisplay rectangles={rectangles} />
+					{/* <RectanglesDisplay rectangles={rectangles} /> */}
 				</div>
 			</div>
 		</main>
