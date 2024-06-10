@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import styles from '../styles/page.module.css';
 import TotalSurface from '../components/updateTotalSurface';
 import SurfaceList, { SurfaceInput } from '../components/surfaceInput';
@@ -16,9 +16,7 @@ export default function Home() {
 
 	const handleTotalSurfaceChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
-
 		settotalSurface(parseInt(value, 10));
-		recalculateLeftOverTotal;
 	};
 
 	const handleTotalSurfaceInputChange = (
@@ -41,29 +39,26 @@ export default function Home() {
 				{ id: updatedFields.length + 1, count: '', surface: '' },
 			]);
 		}
-		recalculateDisplayRectangles();
 	};
 
-	function recalculateDisplayRectangles() {
+	useEffect(() => {
 		const expandedRectangles = surfaceInputs.flatMap((rect: SurfaceField) => {
 			const countString = rect.count.toString();
 			const count = parseInt(countString, 10) >= 1 ? parseInt(countString) : 1;
 			return Array(count).fill(rect);
 		});
-		recalculateLeftOverTotal();
 		setSurfaceDisplay(expandedRectangles);
-	}
+	}, [surfaceInputs]);
 
-	function recalculateLeftOverTotal() {
+	useEffect(() => {
 		const totalRectangelSurface = surfaceDisplay
 			.filter((x) => x.surface != '')
 			.reduce((totalHeight, rect) => {
-				return totalHeight + parseInt(rect.surface.toString());
+				return totalHeight + parseInt(rect.surface.toString()) ?? 0;
 			}, 0);
-		setLeftOverTotal(
-			parseInt(totalSurface.toString(), 10) - totalRectangelSurface
-		);
-	}
+		let result = parseInt(totalSurface.toString(), 10) - totalRectangelSurface;
+		setLeftOverTotal(result ?? 0);
+	}, [surfaceDisplay, surfaceInputs]);
 
 	return (
 		<main className={styles.main}>
