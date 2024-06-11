@@ -28,3 +28,8 @@ export type SurfaceDisplay = {
 	x: number;
 	y: number;
 };
+
+export type conversion = {
+	conversion_from: number;
+	conversion_to: number;
+};

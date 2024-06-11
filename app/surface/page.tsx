@@ -4,13 +4,22 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import styles from '../styles/page.module.css';
 import TotalSurface from '../components/updateTotalSurface';
 import SurfaceList, { SurfaceInput } from '../components/surfaceInput';
-import { SurfaceDisplay, SurfaceField } from '../helpers/rectangleType';
+import {
+	SurfaceDisplay,
+	SurfaceField,
+	conversion,
+} from '../helpers/rectangleType';
 import RectanglesDisplay from '../components/RectanglesDisplay';
 import ConversionInput from '../components/conversionInput';
+import { cmToPx } from '../utils/calculateDimension';
 
 export default function Home() {
 	const [totalSurface, settotalSurface] = useState<number | string>('');
 	const [leftOverTotal, setLeftOverTotal] = useState<number>(0);
+	const [conversion, setConversion] = useState<conversion>({
+		conversion_from: 200,
+		conversion_to: 1,
+	});
 	const [surfaceInputs, setsurfaceInputs] = useState<SurfaceField[]>([
 		{ id: 0, count: '', surface: '' },
 	]);
@@ -46,30 +55,22 @@ export default function Home() {
 	useEffect(() => {
 		const _relevant_inputs = surfaceInputs.filter((x) => x.surface !== '');
 
-		const maxSurface = Math.max(
-			..._relevant_inputs.map((rect: SurfaceField) =>
-				parseInt(rect.surface.toString(), 10)
-			)
-		);
+		// const maxSurface = Math.max(
+		// 	..._relevant_inputs.map((rect: SurfaceField) =>
+		// 		parseInt(rect.surface.toString(), 10)
+		// 	)
+		// );
 
-		console.log(
-			_relevant_inputs.map((rect: SurfaceField) =>
-				parseInt(rect.surface.toString(), 10)
-			)
-		);
-
-		console.log(maxSurface);
-
-		const scaleFactor = 150 / Math.sqrt(maxSurface);
+		// const scaleFactor = 150 / Math.sqrt(maxSurface);
 
 		const expandedRectangles = _relevant_inputs.flatMap((rect) => {
 			const countString = parseInt(rect.count.toString(), 10);
 			const count = countString >= 1 ? countString : 1;
 
-			const size =
-				Math.sqrt(parseInt(rect.surface.toString(), 10)) * scaleFactor;
-
-			console.log(size);
+			const size = cmToPx(
+				Math.sqrt(parseInt(rect.surface.toString(), 10)) *
+					(conversion.conversion_to / conversion.conversion_from)
+			);
 
 			return Array(count).fill({
 				...rect,
@@ -127,7 +128,7 @@ export default function Home() {
 					{/** How to divide the leftover blocks */}
 				</div>
 				<div className={styles.displaySection}>
-					<ConversionInput />
+					<ConversionInput conversion={conversion} />
 					<RectanglesDisplay rectangles={surfaceDisplay} />
 					{JSON.stringify(surfaceDisplay)}
 				</div>
