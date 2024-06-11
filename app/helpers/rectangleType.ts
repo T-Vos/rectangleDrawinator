@@ -25,4 +25,6 @@ export type SurfaceDisplay = {
 	surface: number | string;
 	surfaceColor?: string;
 	surfaceName?: string;
+	x: number;
+	y: number;
 };

@@ -5,6 +5,8 @@ import styles from '../styles/page.module.css';
 import TotalSurface from '../components/updateTotalSurface';
 import SurfaceList, { SurfaceInput } from '../components/surfaceInput';
 import { SurfaceDisplay, SurfaceField } from '../helpers/rectangleType';
+import RectanglesDisplay from '../components/RectanglesDisplay';
+import ConversionInput from '../components/conversionInput';
 
 export default function Home() {
 	const [totalSurface, settotalSurface] = useState<number | string>('');
@@ -42,14 +44,42 @@ export default function Home() {
 	};
 
 	useEffect(() => {
-		const expandedRectangles = surfaceInputs.flatMap(
-			(rect: SurfaceField, index: number) => {
-				const countString = rect.count.toString();
-				const count =
-					parseInt(countString, 10) >= 1 ? parseInt(countString) : 1;
-				return Array(count).fill({ ...rect });
-			}
+		const _relevant_inputs = surfaceInputs.filter((x) => x.surface !== '');
+
+		const maxSurface = Math.max(
+			..._relevant_inputs.map((rect: SurfaceField) =>
+				parseInt(rect.surface.toString(), 10)
+			)
 		);
+
+		console.log(
+			_relevant_inputs.map((rect: SurfaceField) =>
+				parseInt(rect.surface.toString(), 10)
+			)
+		);
+
+		console.log(maxSurface);
+
+		const scaleFactor = 150 / Math.sqrt(maxSurface);
+
+		const expandedRectangles = _relevant_inputs.flatMap((rect) => {
+			const countString = parseInt(rect.count.toString(), 10);
+			const count = countString >= 1 ? countString : 1;
+
+			const size =
+				Math.sqrt(parseInt(rect.surface.toString(), 10)) * scaleFactor;
+
+			console.log(size);
+
+			return Array(count).fill({
+				...rect,
+				x: size,
+				y: size,
+				surfaceName: '',
+				rectGroupid: rect.id,
+			});
+		});
+
 		setSurfaceDisplay(expandedRectangles);
 	}, [surfaceInputs]);
 
@@ -97,8 +127,9 @@ export default function Home() {
 					{/** How to divide the leftover blocks */}
 				</div>
 				<div className={styles.displaySection}>
+					<ConversionInput />
+					<RectanglesDisplay rectangles={surfaceDisplay} />
 					{JSON.stringify(surfaceDisplay)}
-					{/* <RectanglesDisplay rectangles={rectangles} /> */}
 				</div>
 			</div>
 		</main>
