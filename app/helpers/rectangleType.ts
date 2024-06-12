@@ -27,6 +27,7 @@ export type SurfaceDisplay = {
 	surfaceName?: string;
 	x: number;
 	y: number;
+	id: number;
 };
 
 export type conversion = {

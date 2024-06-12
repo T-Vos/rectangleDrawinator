@@ -9,7 +9,10 @@ import {
 	SurfaceField,
 	conversion,
 } from '../helpers/rectangleType';
-import RectanglesDisplay from '../components/RectanglesDisplay';
+import RectanglesDisplay, {
+	ListContainer,
+	Rectangle,
+} from '../components/RectanglesDisplay';
 import ConversionInput from '../components/conversionInput';
 import { cmToPx } from '../utils/calculateDimension';
 
@@ -52,6 +55,37 @@ export default function Home() {
 		}
 	};
 
+	const handleConversionInputChange = (
+		event: ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, value } = event.target;
+		setConversion((prevConversion) => ({
+			...prevConversion,
+			[name]: value,
+		}));
+	};
+
+	const handleRectangleNameChange = (
+		id: string,
+		event: ChangeEvent<HTMLInputElement>
+	) => {
+		const { name, value } = event.target;
+
+		const updatedFields = surfaceDisplay.map((field) => {
+			// if (field. === id) {
+			// 	return { ...field, [name]: value };
+			// }
+			// return field;
+		});
+		// setsurfaceDisplay(updatedFields);
+		// const lastField = updatedFields[updatedFields.length - 1];
+		// if (lastField.surface && lastField.count) {
+		// 	setsurfaceInputs([
+		// 		...updatedFields,
+		// 		{ id: updatedFields.length + 1, count: '', surface: '' },
+		// 	]);
+	};
+
 	useEffect(() => {
 		const _relevant_inputs = surfaceInputs.filter((x) => x.surface !== '');
 
@@ -82,7 +116,7 @@ export default function Home() {
 		});
 
 		setSurfaceDisplay(expandedRectangles);
-	}, [surfaceInputs]);
+	}, [surfaceInputs, conversion]);
 
 	useEffect(() => {
 		const _totalRectangelSurface =
@@ -128,8 +162,19 @@ export default function Home() {
 					{/** How to divide the leftover blocks */}
 				</div>
 				<div className={styles.displaySection}>
-					<ConversionInput conversion={conversion} />
-					<RectanglesDisplay rectangles={surfaceDisplay} />
+					<ConversionInput
+						conversion={conversion}
+						onInputChange={handleConversionInputChange}
+					/>
+					<ListContainer>
+						{surfaceDisplay.map((rectangle, index) => (
+							<Rectangle
+								rect={rectangle}
+								onInputChange={handleRectangleNameChange}
+								key={index}
+							/>
+						))}
+					</ListContainer>
 					{JSON.stringify(surfaceDisplay)}
 				</div>
 			</div>

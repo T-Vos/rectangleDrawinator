@@ -2,7 +2,7 @@ export function cmToPx(cm: number) {
 	const dpi = 96; // Assuming 96 DPI
 	const ppd = window.devicePixelRatio; // Pixels per dot
 
-	return ((cm * dpi * ppd) / 2.54).toFixed(2); // Rounded to 2 decimal places
+	return ((cm * dpi * ppd) / 2.54).toFixed(2);
 }
 
 // import { Rectangle } from '../helpers/rectangleType';
